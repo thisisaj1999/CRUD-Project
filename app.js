@@ -1,7 +1,9 @@
 const express = require('express');
 require('./db/connect');
 require('dotenv').config();
-const cities = require('./data/cities');
+const User = require('./models/userData');
+
+const cities = require('./db/cities');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -14,7 +16,7 @@ app.get('/', (req, res) => {
 let data = {};
 
 app.post('/', (req, res) => {
-  data = {
+  const data = new User({
     fname: req.body.fname,
     lname: req.body.lname,
     email: req.body.email,
@@ -22,7 +24,10 @@ app.post('/', (req, res) => {
     address: req.body.address,
     city: req.body.city,
     gender: req.body.gender,
-  };
+  });
+
+  const storedData = data.save();
+
   res.redirect('/list');
 });
 
