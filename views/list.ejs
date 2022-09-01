@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>List</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="flex justify-center">
+    <section class="w-full flex flex-col justify-center">
+      <div class="main mb-6 flex flex-col justify-between">
+        <div class="overflow-x-auto relative shadow-md">
+          <table
+            class="w-full text-sm text-left text-gray-500 dark:text-gray-400 table-auto"
+          >
+            <thead
+              class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400"
+            >
+              <tr>
+                <th scope="col" class="py-3 px-6">Name</th>
+                <th scope="col" class="py-3 px-6">Email</th>
+                <th scope="col" class="py-3 px-6">Phone No.</th>
+                <th scope="col" class="py-3 px-6">Address</th>
+                <th scope="col" class="py-3 px-6">City</th>
+                <th scope="col" class="py-3 px-6 text-center">Gender</th>
+                <th scope="col" class="text-center py-3 px-6">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                class="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
+              >
+                <th
+                  scope="row"
+                  class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  Atul Joshi
+                </th>
+                <td class="py-4 px-6">atuljoshi94170@gmail.com</td>
+                <td class="py-4 px-6">9478501527</td>
+                <td class="py-4 px-6">6199, Maloya Colony</td>
+                <td class="py-4 px-6">Chandigarh</td>
+                <td class="py-4 px-6 text-center">Male</td>
+                <td class="py-4 px-6 text-center">
+                  <a
+                    href="#"
+                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >Edit</a
+                  >
+                  <a
+                    href="#"
+                    class="font-medium text-red-600 dark:text-red-500 hover:underline"
+                    >Delete</a
+                  >
+                </td>
+              </tr>
+              <tr
+                class="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
+              >
+                <th
+                  scope="row"
+                  class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                >
+                  <%=name%>
+                </th>
+                <td class="py-4 px-6"><%=email%></td>
+                <td class="py-4 px-6"><%=contact%></td>
+                <td class="py-4 px-6"><%=address%></td>
+                <td class="py-4 px-6"><%=city%></td>
+                <td class="py-4 px-6 text-center"><%=gender%></td>
+                <td class="py-4 px-6 text-center">
+                  <a
+                    href="#"
+                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
+                    >Edit</a
+                  >
+                  <a
+                    href="#"
+                    class="font-medium text-red-600 dark:text-red-500 hover:underline"
+                    >Delete</a
+                  >
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+  </body>
+</html>
