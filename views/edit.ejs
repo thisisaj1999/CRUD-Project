@@ -9,8 +9,8 @@
   </head>
   <body class="flex justify-center items-center flex-col mb-8">
     
-    <h1 class="text-3xl font-semibold text-center py-10">Update Data</h1>
-    <form action="/" method="post" class="m-2 md:w-3/4 lg:w-2/4 w-96 flex flex-col justify-center">
+    <h1 class="text-3xl font-semibold text-center py-10">Update User</h1>
+    <form action="/update/<%= userUpdate._id%>" method="post" class="m-2 md:w-3/4 lg:w-2/4 w-96 flex flex-col justify-center">
       <!-- Names -->
       <div class="mb-6 flex flex-col justify-between">
         <!-- First Name -->
@@ -24,6 +24,7 @@
             type="text"
             id="fname"
             name="fname"
+            value="<%=userUpdate.fname%>"
             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required=""
           />
@@ -39,6 +40,7 @@
             type="text"
             id="lname"
             name="lname"
+            value="<%=userUpdate.lname%>"
             class="bg-gray-50 border border-gray-300 text-gray-900 w-full text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             required=""
           />
@@ -55,6 +57,7 @@
           type="email"
           id="email"
           name="email"
+          value="<%=userUpdate.email%>"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="name@flowbite.com"
           required=""
@@ -72,6 +75,7 @@
           id="contact"
           name="contact"
           maxlength="10"
+          value="<%=userUpdate.contact%>"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="+91-123-456-7890"
           required=""
@@ -88,6 +92,7 @@
           type="text"
           id="address"
           name="address"
+          value="<%=userUpdate.address%>"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           required=""
         />
@@ -156,7 +161,7 @@
         type="submit"
         class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-35 sm:w-32 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
       >
-        Submit
+        Update
       </button>
     </form>
   </body>
