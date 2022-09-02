@@ -12,12 +12,12 @@ const userData = new mongoose.Schema({
   email: {
     type: String,
     required: true,
-    unique: true,
+    unique: [true, `${this.username} already exists.`],
   },
   contact: {
     type: Number,
     required: true,
-    unique: true,
+    unique: [true, `${this.username} already exists.`],
   },
   address: {
     type: String,

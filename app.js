@@ -31,16 +31,32 @@ app.post('/', (req, res) => {
   res.redirect('/list');
 });
 
-app.get('/list', (req, res) => {
-  res.render('list', {
-    name: `${data.fname} ${data.lname}`,
-    email: data.email,
-    contact: data.contact,
-    address: data.address,
-    city: data.city,
-    gender: data.gender,
+app.get('/list', async (req, res) => {
+  User.find().exec((err, users) => {
+    res.render('list', {
+      users: users,
+    });
   });
 });
+
+app.delete('/delete/:id', (req, res) => {
+  User.findByIdAndRemove(req.params.id, (err) => {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log(`User deleted successfully...`);
+    }
+  });
+});
+
+// app.delete('/reviews/:id', function (req, res) {
+//   console.log("DELETE review")
+//   Review.findByIdAndRemove(req.params.id).then((review) => {
+//     res.redirect('/');
+//   }).catch((err) => {
+//     console.log(err.message);
+//   })
+// })
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

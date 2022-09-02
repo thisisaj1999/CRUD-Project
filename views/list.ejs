@@ -8,6 +8,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
   <body class="flex justify-center">
+    <%if (users != ""){%>
     <section class="w-full flex flex-col justify-center">
       <div class="main mb-6 flex flex-col justify-between">
         <div class="overflow-x-auto relative shadow-md">
@@ -18,11 +19,11 @@
               class="text-xs text-gray-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400"
             >
               <tr>
-                <th scope="col" class="py-3 px-6">Name</th>
-                <th scope="col" class="py-3 px-6">Email</th>
-                <th scope="col" class="py-3 px-6">Phone No.</th>
-                <th scope="col" class="py-3 px-6">Address</th>
-                <th scope="col" class="py-3 px-6">City</th>
+                <th scope="col" class="py-3 px-6 text-center">Name</th>
+                <th scope="col" class="py-3 px-6 text-center">Email</th>
+                <th scope="col" class="py-3 px-6 text-center">Phone No.</th>
+                <th scope="col" class="py-3 px-6 text-center">Address</th>
+                <th scope="col" class="py-3 px-6 text-center">City</th>
                 <th scope="col" class="py-3 px-6 text-center">Gender</th>
                 <th scope="col" class="text-center py-3 px-6">Action</th>
               </tr>
@@ -33,14 +34,14 @@
               >
                 <th
                   scope="row"
-                  class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
                 >
-                  Atul Joshi
+                  Test Test
                 </th>
-                <td class="py-4 px-6">atuljoshi94170@gmail.com</td>
-                <td class="py-4 px-6">9478501527</td>
-                <td class="py-4 px-6">6199, Maloya Colony</td>
-                <td class="py-4 px-6">Chandigarh</td>
+                <td class="py-4 px-6 text-center">test@gmail.com</td>
+                <td class="py-4 px-6 text-center">1234567890</td>
+                <td class="py-4 px-6 text-center">xyz,floor test</td>
+                <td class="py-4 px-6 text-center">Mohali</td>
                 <td class="py-4 px-6 text-center">Male</td>
                 <td class="py-4 px-6 text-center">
                   <a
@@ -55,37 +56,63 @@
                   >
                 </td>
               </tr>
+
+              <% users.forEach((row,index)=>{%>
               <tr
                 class="bg-white border-b dark:bg-gray-900 dark:border-gray-700"
               >
                 <th
                   scope="row"
-                  class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white"
+                  class="py-4 px-6 font-medium text-gray-900 whitespace-nowrap dark:text-white text-center"
                 >
-                  <%=name%>
+                  <%=row.fname +" "+row.lname%>
                 </th>
-                <td class="py-4 px-6"><%=email%></td>
-                <td class="py-4 px-6"><%=contact%></td>
-                <td class="py-4 px-6"><%=address%></td>
-                <td class="py-4 px-6"><%=city%></td>
-                <td class="py-4 px-6 text-center"><%=gender%></td>
+                <td class="py-4 px-6 text-center"><%=row.email%></td>
+                <td class="py-4 px-6 text-center"><%=row.contact%></td>
+                <td class="py-4 px-6 text-center"><%=row.address%></td>
+                <td class="py-4 px-6 text-center"><%=row.city%></td>
+                <td class="py-4 px-6 text-center"><%=row.gender%></td>
                 <td class="py-4 px-6 text-center">
                   <a
-                    href="#"
+                    href="/edit/<%=row._id%>"
                     class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
                     >Edit</a
                   >
                   <a
-                    href="#"
+                  href="/delete/<%=row._id%>""
                     class="font-medium text-red-600 dark:text-red-500 hover:underline"
                     >Delete</a
                   >
                 </td>
               </tr>
+              <%})%>
             </tbody>
           </table>
         </div>
       </div>
+      <div class="flex flex-col items-center">
+        <a
+          href="/"
+          class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-35 sm:w-32 px-5 py-2.5 mt-4 mb-8 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+        >
+          Add More
+        </a>
+      </div>
     </section>
+    <%} else {%>
+    <section
+      class="main flex flex-col items-center gap-10 justify-center h-screen"
+    >
+      <h1 class="text-center text-secondary font-medium text-xl">
+        No user found in the database
+      </h1>
+      <a
+        href="/"
+        class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm w-35 sm:w-32 px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+      >
+        Add User
+      </a>
+    </section>
+    <%}%>
   </body>
 </html>

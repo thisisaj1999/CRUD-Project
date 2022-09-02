@@ -7,8 +7,10 @@
     <title>Form</title>
     <script src="https://cdn.tailwindcss.com"></script>
   </head>
-  <body class="flex justify-center">
-    <form action="/" method="post" class="m-10 md:w-3/4 lg:w-2/4 w-96 flex flex-col justify-center">
+  <body class="flex justify-center items-center flex-col mb-8">
+    
+    <h1 class="text-3xl font-semibold text-center py-10">Create Data</h1>
+    <form action="/" method="post" class="m-2 md:w-3/4 lg:w-2/4 w-96 flex flex-col justify-center">
       <!-- Names -->
       <div class="mb-6 flex flex-col justify-between">
         <!-- First Name -->
@@ -69,6 +71,7 @@
           type="tel"
           id="contact"
           name="contact"
+          maxlength="10"
           class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
           placeholder="+91-123-456-7890"
           required=""
