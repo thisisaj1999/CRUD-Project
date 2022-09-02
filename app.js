@@ -2,8 +2,9 @@ const express = require('express');
 require('./db/connect');
 require('dotenv').config();
 const User = require('./models/userData');
-
+const https = require('https');
 const cities = require('./db/cities');
+const { response } = require('express');
 
 const app = express();
 app.use(express.urlencoded({ extended: true }));
@@ -13,22 +14,60 @@ app.get('/', (req, res) => {
   res.render('form', { cities: cities });
 });
 
-let data = {};
+let dataUser = {};
 
 app.post('/', (req, res) => {
-  const data = new User({
-    fname: req.body.fname,
-    lname: req.body.lname,
-    email: req.body.email,
-    contact: req.body.contact,
-    address: req.body.address,
-    city: req.body.city,
-    gender: req.body.gender,
-  });
+  try {
+    const dataUser = new User({
+      fname: req.body.fname,
+      lname: req.body.lname,
+      email: req.body.email,
+      contact: req.body.contact,
+      address: req.body.address,
+      city: req.body.city,
+      gender: req.body.gender,
+    });
 
-  const storedData = data.save();
+    const storedData = dataUser.save();
 
-  res.redirect('/list');
+    const data = {
+      members: [
+        {
+          email_address: req.body.email,
+          status: 'subscribed',
+          merge_fields: {
+            FNAME: req.body.fname,
+            LNAME: req.body.lname,
+            PHONE: req.body.contact,
+            ADDRESS: req.body.address,
+          },
+        },
+      ],
+    };
+
+    const jsonData = JSON.stringify(data);
+
+    const url = process.env.MAILCHIMP_URL;
+
+    const options = {
+      method: 'POST',
+      auth: process.env.MAILCHIMP_KEY,
+    };
+
+    const request = https.request(url, options, (response) => {
+      response.on('data', (data) => {
+        console.log(JSON.parse(data));
+      });
+    });
+
+    request.write(jsonData);
+    request.end();
+    res.redirect('/list');
+    console.log(`User added successfully...`);
+  } catch (error) {
+    res.redirect('/list');
+    console.log(`User registration failed...\n${error}`);
+  }
 });
 
 app.get('/list', async (req, res) => {
