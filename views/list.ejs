@@ -6,6 +6,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>List</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script
+      src="https://kit.fontawesome.com/ba7999eed7.js"
+      crossorigin="anonymous"
+    ></script>
   </head>
   <body class="flex justify-center">
     <%if (usersList != ""){%>
@@ -43,17 +47,14 @@
                 <td class="py-4 px-6 text-center">xyz,floor test</td>
                 <td class="py-4 px-6 text-center">Mohali</td>
                 <td class="py-4 px-6 text-center">Male</td>
-                <td class="py-4 px-6 text-center">
-                  <a
-                    href="#"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >Edit</a
-                  >
-                  <a
-                    href="#"
-                    class="font-medium text-red-600 dark:text-red-500 hover:underline"
-                    >Delete</a
-                  >
+                <td class="py-4 px-6 text-center whitespace-nowrap">
+                  <a href="#" class="text-blue-600 pr-2"
+                    ><i class="fas fa-edit fa-regular fa-lg"></i
+                  ></a>
+
+                  <a href="#" class="text-red-600 pl-2"
+                    ><i class="fas fa-trash fa-regular fa-lg"></i
+                  ></a>
                 </td>
               </tr>
 
@@ -69,20 +70,20 @@
                 </th>
                 <td class="py-4 px-6 text-center"><%=row.email%></td>
                 <td class="py-4 px-6 text-center"><%=row.contact%></td>
-                <td class="py-4 px-6 text-center"><%=row.address%></td>
+                <td class="py-4 px-6 text-center whitespace-nowrap">
+                  <%=row.address%>
+                </td>
                 <td class="py-4 px-6 text-center"><%=row.city%></td>
                 <td class="py-4 px-6 text-center"><%=row.gender%></td>
-                <td class="py-4 px-6 text-center">
-                  <a
-                    href="/edit/<%=row._id%>"
-                    class="font-medium text-blue-600 dark:text-blue-500 hover:underline"
-                    >Edit</a
-                  >
-                  <a
-                  href="/delete/<%=row._id%>""
-                    class="font-medium text-red-600 dark:text-red-500 hover:underline"
-                    >Delete</a
-                  >
+
+                <td class="py-4 px-6 text-center whitespace-nowrap">
+                  <a href="/edit/<%=row._id%>" class="text-blue-600 pr-2"
+                    ><i class="fas fa-edit fa-regular fa-lg"></i
+                  ></a>
+
+                  <a href="/delete/<%=row._id%>" class="text-red-600 pl-2"
+                    ><i class="fas fa-trash fa-regular fa-lg"></i
+                  ></a>
                 </td>
               </tr>
               <%})%>
