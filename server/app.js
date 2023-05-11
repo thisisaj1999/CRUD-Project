@@ -1,113 +1,118 @@
 const express = require('express');
 require('./db/connect');
+const cors = require('cors');
+
 require('dotenv').config();
 const User = require('./models/userData');
 const https = require('https');
 const cities = require('./db/cities');
-const { response } = require('express');
 
 const app = express();
-app.use(express.urlencoded({ extended: true }));
-app.set('view engine', 'ejs');
+app.use(cors());
+app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.render('form', { cities: cities });
+app.get('/all-cities', (req, res) => {
+  res.json({ cities: cities });
 });
 
-let dataUser = {};
+app.post('/add-user', async (req, res) => {
+  const dataUser = new User({
+    fname: req.body.fname,
+    lname: req.body.lname,
+    email: req.body.email,
+    contact: req.body.contact,
+    address: req.body.address,
+    city: req.body.city,
+    gender: req.body.gender,
+  });
 
-app.post('/', (req, res) => {
-  try {
-    const dataUser = new User({
-      fname: req.body.fname,
-      lname: req.body.lname,
-      email: req.body.email,
-      contact: req.body.contact,
-      address: req.body.address,
-      city: req.body.city,
-      gender: req.body.gender,
-    });
+  const userEmail = await User.findOne({ email: dataUser.email });
+  const userContact = await User.findOne({ contact: dataUser.contact });
 
-    const storedData = dataUser.save();
+  if (!userEmail && !userContact) {
+    console.log(dataUser);
+    dataUser.save();
 
-    const data = {
-      members: [
-        {
-          email_address: req.body.email,
-          status: 'subscribed',
-          merge_fields: {
-            FNAME: req.body.fname,
-            LNAME: req.body.lname,
-            PHONE: req.body.contact,
-            ADDRESS: req.body.address,
-          },
-        },
-      ],
-    };
+    // const data = {
+    //   members: [
+    //     {
+    //       email_address: req.body.email,
+    //       status: 'subscribed',
+    //       merge_fields: {
+    //         FNAME: req.body.fname,
+    //         LNAME: req.body.lname,
+    //         PHONE: req.body.contact,
+    //         ADDRESS: req.body.address,
+    //       },
+    //     },
+    //   ],
+    // };
 
-    const jsonData = JSON.stringify(data);
+    // const jsonData = JSON.stringify(data);
 
-    const url = process.env.MAILCHIMP_URL;
+    // const url = process.env.MAILCHIMP_URL;
 
-    const options = {
-      method: 'POST',
-      auth: process.env.MAILCHIMP_KEY,
-    };
+    // const options = {
+    //   method: 'POST',
+    //   auth: process.env.MAILCHIMP_KEY,
+    // };
 
-    const request = https.request(url, options, (response) => {
-      response.on('data', (data) => {
-        console.log(JSON.parse(data));
-      });
-    });
+    // const request = https.request(url, options, (response) => {
+    //   response.on('data', (data) => {
+    //     console.log(JSON.parse(data));
+    //   });
+    // });
 
-    request.write(jsonData);
-    request.end();
-    res.redirect('/list');
-    console.log(`User added successfully...`);
-  } catch (error) {
-    res.redirect('/list');
-    console.log(`User registration failed...\n${error}`);
+    // request.write(jsonData);
+    // request.end();
+
+    res.status(200).json({ msg: `User Created Successfully...` });
+  } else if (!userContact) {
+    res
+      .status(400)
+      .json({ msg: `Email "${dataUser.email}" Already Exists...` });
+  } else if (!userEmail) {
+    res
+      .status(400)
+      .json({ msg: `Contact "${dataUser.contact}" Already Exists...` });
   }
 });
 
 app.get('/list', async (req, res) => {
   User.find().exec((err, users) => {
-    res.render('list', {
-      usersList: users,
-    });
+    res.json({ usersList: users });
   });
 });
 
-app.get('/delete/:id', (req, res) => {
+app.delete('/delete/:id', (req, res) => {
   User.findByIdAndRemove(req.params.id)
     .then(() => {
-      res.redirect('/list');
-      console.log(`User deleted successfully...`);
+      res.status(200).json({ msg: `User Deleted Successfully...` });
     })
     .catch((err) => {
-      console.log(err.message);
+      res.status(400).json({ msg: `Error Deleting User...`, error: err });
     });
 });
 
 // get route update user
-app.get('/edit/:id', (req, res) => {
-  User.findById(req.params.id, (err, user) => {
-    if (err) {
-      res.redirect('/list');
-    } else {
-      if (user == null) {
-        res.redirect('/list');
-      } else {
-        res.render('edit', {
-          userUpdate: user,
-        });
-      }
-    }
-  });
-});
+// app.patch('/edit/:id', (req, res) => {
+//   User.findById(req.params.id, (err, user) => {
+//     if (err) {
+//       res.redirect('/list');
+//     } else {
+//       if (user == null) {
+//         res.redirect('/list');
+//       } else {
+//         res.render('edit', {
+//           userUpdate: user,
+//         });
+//       }
+//     }
+//   });
+// });
 
 // post route update user
-app.post('/update/:id', (req, res) => {
+app.patch('/update/:id', (req, res) => {
   User.findByIdAndUpdate(
     req.params.id,
     {
@@ -121,10 +126,9 @@ app.post('/update/:id', (req, res) => {
     },
     (err) => {
       if (err) {
-        console.log(err);
+        res.status(400).json({ msg: `Error Updating User...`, error: err });
       } else {
-        console.log('User updated successfully...');
-        res.redirect('/list');
+        res.status(200).json({ msg: `User Updated Successfully...` });
       }
     }
   );
