@@ -78,9 +78,9 @@ app.post('/add-user', async (req, res) => {
   }
 });
 
-app.get('/list', async (req, res) => {
+app.get('/all-users', async (req, res) => {
   User.find().exec((err, users) => {
-    res.json({ usersList: users });
+    res.status(200).json({ usersList: users });
   });
 });
 
