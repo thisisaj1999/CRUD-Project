@@ -14,7 +14,7 @@ export default function index({ posts }) {
     setTimeout(() => {
       setData(posts.usersList);
       setStatus('resolved');
-    }, 1000);
+    }, 500);
   }, []);
 
   const handleDeleteUser = async (userId) => {
@@ -38,7 +38,6 @@ export default function index({ posts }) {
           spin
           className="text-blue-900 text-3xl"
         />
-        {/* <p className="mt-2 text-lg font-medium">Loading</p> */}
       </div>
     );
   }
