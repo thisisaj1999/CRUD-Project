@@ -43,7 +43,6 @@ export default function index({ posts }) {
     );
   }
 
-
   return (
     <div>
       <ListTable allUsers={data} deletedUser={handleDeleteUser} />
